@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## GitHub リポジトリ
+
+https://github.com/kmaeda8856-droid/task-note.git
+
 ## Git 運用ルール
 
 - コードを変更するたびに、変更をコミットして GitHub にプッシュすること。
