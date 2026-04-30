@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>タスク管理ノート</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="app">
+
+    <header class="header">
+      <div class="header-inner">
+        <h1 class="logo">タスク管理ノート</h1>
+        <button class="btn btn-primary" id="openFormBtn">+ 新しいタスク</button>
+      </div>
+    </header>
+
+    <main class="main">
+      <div class="container">
+
+        <div class="filter-bar">
+          <div class="filter-tabs">
+            <button class="filter-tab active" data-filter="all">すべて</button>
+            <button class="filter-tab" data-filter="active">未完了</button>
+            <button class="filter-tab" data-filter="completed">完了済み</button>
+          </div>
+          <span class="task-count" id="taskCount">0 件</span>
+        </div>
+
+        <div class="task-list" id="taskList"></div>
+
+        <div class="empty-state" id="emptyState">
+          <div class="empty-icon">✓</div>
+          <p>タスクはありません</p>
+          <p class="empty-sub">「+ 新しいタスク」から追加してください</p>
+        </div>
+
+      </div>
+    </main>
+
+    <!-- 入力モーダル -->
+    <div class="modal-overlay" id="modalOverlay">
+      <div class="modal">
+        <div class="modal-header">
+          <h2 id="modalTitle">新しいタスク</h2>
+          <button class="modal-close" id="closeFormBtn">&times;</button>
+        </div>
+        <form class="form" id="taskForm">
+          <div class="form-group">
+            <label class="form-label" for="taskTitle">タイトル <span class="required">*</span></label>
+            <input type="text" id="taskTitle" class="form-input" placeholder="タスクのタイトルを入力" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="taskDesc">メモ</label>
+            <textarea id="taskDesc" class="form-textarea" placeholder="詳細やメモを入力" rows="3"></textarea>
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="taskDeadline">期限</label>
+            <input type="date" id="taskDeadline" class="form-input">
+          </div>
+          <div class="form-actions">
+            <button type="button" class="btn btn-secondary" id="cancelBtn">キャンセル</button>
+            <button type="submit" class="btn btn-primary">保存する</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- 完了トースト -->
+    <div class="toast" id="toast"></div>
+
+  </div>
+  <script src="js/app.js"></script>
+</body>
+</html>
