@@ -145,22 +145,35 @@ function cardHTML(t) {
 // ── Helpers ────────────────────────────────────
 function deadlineStatus(dl) {
   if (!dl) return null;
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  const diff = Math.ceil((new Date(dl) - today) / 864e5);
-  if (diff < 0)  return 'danger';
-  if (diff <= 3) return 'warning';
+  const now = new Date();
+  const d = new Date(dl);
+  if (d < now) return 'danger';
+  if ((d - now) / 36e5 <= 72) return 'warning';
   return null;
 }
 
 function formatDeadline(dl) {
   if (!dl) return null;
   const d = new Date(dl);
+  const now = new Date();
+  const hasTime = dl.includes('T');
+  const MM = d.getMonth() + 1;
+  const DD = d.getDate();
+  const hh = String(d.getHours()).padStart(2, '0');
+  const mm = String(d.getMinutes()).padStart(2, '0');
+  const dateStr = `${MM}/${DD}`;
+  const timeStr = `${hh}:${mm}`;
+  const label = hasTime ? `${dateStr} ${timeStr}` : dateStr;
+
+  if (d < now) return `期限切れ（${label}）`;
+
   const today = new Date(); today.setHours(0, 0, 0, 0);
-  const diff = Math.ceil((d - today) / 864e5);
-  if (diff < 0)  return `期限切れ（${d.getMonth()+1}/${d.getDate()}）`;
-  if (diff === 0) return '今日が期限';
-  if (diff === 1) return '明日が期限';
-  return `${d.getMonth()+1}/${d.getDate()} まで（あと ${diff} 日）`;
+  const dDay = new Date(d);  dDay.setHours(0, 0, 0, 0);
+  const diffDays = Math.round((dDay - today) / 864e5);
+
+  if (diffDays === 0) return hasTime ? `今日 ${timeStr} まで` : '今日が期限';
+  if (diffDays === 1) return hasTime ? `明日 ${timeStr} まで` : '明日が期限';
+  return `${label} まで（あと ${diffDays} 日）`;
 }
 
 function formatCreated(iso) {
